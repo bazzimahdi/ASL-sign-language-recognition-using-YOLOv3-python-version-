@@ -23,10 +23,10 @@ realtime custom.py is for real time implementation from webcam, its customly mad
 use realtime_detect from original repo for more than multiple object recognition </br>
 video_input.py to feed the model with video </br>
 
-<b>Requirements:</b><br>
+<b>Requirements for this version:</b><br>
 Python 3.9
 TensorFlow 2.9.0<br>
 Keras 2.9.0<br>
 Numpy (all versions should work)<br>
 opencv-python (all versions should work)<br>
-
+<b>Original repo is compatible wtih TensorFlow 1.x up to the time of this commit </br>
