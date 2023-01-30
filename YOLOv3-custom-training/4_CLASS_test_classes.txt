@@ -1,4 +1,0 @@
-Bus
-Car
-Fire_hydrant
-Traffic_light
