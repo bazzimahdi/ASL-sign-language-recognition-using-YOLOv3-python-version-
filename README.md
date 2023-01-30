@@ -13,6 +13,8 @@ How to use YOLO v3 with webcam:<br>
 https://pylessons.com/YOLOv3-WebCam/<br>
 <br>
 
+<b> dataset used from: </b><br>
+https://public.roboflow.com/object-detection/american-sign-language-letters</br>
 
 <b>Requirements:</b><br>
 Python 3.9
