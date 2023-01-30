@@ -3,7 +3,7 @@ Detection and custom training process works better, is more accurate and has mor
 https://github.com/pythonlessons/TensorFlow-2.x-YOLOv3
 
 # YOLOv3-object-detection-tutorial
-<b> for tutorials from original repo on how to train the model </b>
+<b> for tutorials from original repo on how to train the model </b><br>
 More information:<br>
 https://pylessons.com/YOLOv3-custom-data/<br>
 and<br>
