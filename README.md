@@ -12,10 +12,11 @@ https://pylessons.com/YOLOv3-custom-training/<br>
 How to use YOLO v3 with webcam:<br>
 https://pylessons.com/YOLOv3-WebCam/<br>
 <br>
-In future will update readme file
+
 
 <b>Requirements:</b><br>
-TensorFlow 1.15<br>
-Keras 2.2.4<br>
+Python 3.9
+TensorFlow 2.9.0<br>
+Keras 2.9.0<br>
 Numpy (all versions should work)<br>
 opencv-python (all versions should work)<br>
