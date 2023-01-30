@@ -21,6 +21,7 @@ change the path to global path using the append path to annotations function </b
 follow the original tutorial for training </br>
 realtime custom.py is for real time implementation from webcam, its customly made for ASL to return only one object </br>
 use realtime_detect from original repo for more than multiple object recognition </br>
+video_input.py to feed the model with video </br>
 
 <b>Requirements:</b><br>
 Python 3.9
