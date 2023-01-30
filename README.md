@@ -19,7 +19,7 @@ https://public.roboflow.com/object-detection/american-sign-language-letters</br>
 download the dataset in the form of yolov3 keras version </br>
 change the path to global path using the append path to annotations function </br>
 follow the original tutorial for training </br>
-real time custom.py is for real time implementation from webcam, its customly made for ASL to return only one object </br>
+realtime custom.py is for real time implementation from webcam, its customly made for ASL to return only one object </br>
 use realtime_detect from original repo for more than multiple object recognition </br>
 
 <b>Requirements:</b><br>
