@@ -12,6 +12,7 @@ from keras.layers import Input
 from yolo3.model import yolo_eval, yolo_body, tiny_yolo_body
 from yolo3.utils import image_preporcess
 
+# import tensorflow.compat.v1.keras.backend as K 
 import tensorflow as tf
 tf.compat.v1.disable_eager_execution()
 
@@ -114,39 +115,48 @@ class YOLO(object):
         thickness = (image.shape[0] + image.shape[1]) // 600
         fontScale=1
         ObjectsList = []
-        
+        if len(out_scores)==0:
+            return image,ObjectsList
+
+        predicted_classes = []
+        boxes = []
+        scores = []
         for i, c in reversed(list(enumerate(out_classes))):
-            predicted_class = self.class_names[c]
-            box = out_boxes[i]
-            score = out_scores[i]
+            predicted_classes.append(self.class_names[c])
+            boxes.append(out_boxes[i])
+            scores.append(out_scores[i])
+            order = np.argmax(scores)
+            predicted_class = predicted_classes[order]
+            box = boxes[order]
+            score = scores[order]
+        
+        label = '{} {:.2f}'.format(predicted_class, score)
+        #label = '{}'.format(predicted_class)
+        scores = '{:.2f}'.format(score)
 
-            label = '{} {:.2f}'.format(predicted_class, score)
-            #label = '{}'.format(predicted_class)
-            scores = '{:.2f}'.format(score)
+        top, left, bottom, right = box
+        top = max(0, np.floor(top + 0.5).astype('int32'))
+        left = max(0, np.floor(left + 0.5).astype('int32'))
+        bottom = min(image.shape[0], np.floor(bottom + 0.5).astype('int32'))
+        right = min(image.shape[1], np.floor(right + 0.5).astype('int32'))
 
-            top, left, bottom, right = box
-            top = max(0, np.floor(top + 0.5).astype('int32'))
-            left = max(0, np.floor(left + 0.5).astype('int32'))
-            bottom = min(image.shape[0], np.floor(bottom + 0.5).astype('int32'))
-            right = min(image.shape[1], np.floor(right + 0.5).astype('int32'))
+        mid_h = (bottom-top)/2+top
+        mid_v = (right-left)/2+left
 
-            mid_h = (bottom-top)/2+top
-            mid_v = (right-left)/2+left
+        # put object rectangle
+        cv2.rectangle(image, (left, top), (right, bottom), self.colors[c], thickness)
 
-            # put object rectangle
-            cv2.rectangle(image, (left, top), (right, bottom), self.colors[c], thickness)
+        # get text size
+        (test_width, text_height), baseline = cv2.getTextSize(label, cv2.FONT_HERSHEY_SIMPLEX, thickness/self.text_size, 1)
 
-            # get text size
-            (test_width, text_height), baseline = cv2.getTextSize(label, cv2.FONT_HERSHEY_SIMPLEX, thickness/self.text_size, 1)
+        # put text rectangle
+        cv2.rectangle(image, (left, top), (left + test_width, top - text_height - baseline), self.colors[c], thickness=cv2.FILLED)
 
-            # put text rectangle
-            cv2.rectangle(image, (left, top), (left + test_width, top - text_height - baseline), self.colors[c], thickness=cv2.FILLED)
+        # put text above rectangle
+        cv2.putText(image, label, (left, top-2), cv2.FONT_HERSHEY_SIMPLEX, thickness/self.text_size, (0, 0, 0), 1)
 
-            # put text above rectangle
-            cv2.putText(image, label, (left, top-2), cv2.FONT_HERSHEY_SIMPLEX, thickness/self.text_size, (0, 0, 0), 1)
-
-            # add everything to list
-            ObjectsList.append([top, left, bottom, right, mid_v, mid_h, label, scores])
+        # add everything to list
+        ObjectsList.append([top, left, bottom, right, mid_v, mid_h, label, scores])
 
         return image, ObjectsList
 
